@@ -16,18 +16,18 @@ showhelp() {
 	echo "./git_tools.sh -p:                   Push changes to remote"
 }
 
-if [ $# -lt 1 ] || [ $1 = "-h" ]; then
+if [ $# -lt 1 ] || [ "$1" = "-h" ]; then
 	echo "$#"
 	showhelp
 	exit 0
 fi
 	
-if [ $1 = "-p" ]; then
+if [ "$1" = "-p" ]; then
 	git push -u origin master
 	exit 0
 fi
 
-if [ $1 = "-c" ]; then
+if [ "$1" = "-c" ]; then
 	shift
 	git add $@
 	read -p "Please type commit message: " commit_name
@@ -39,7 +39,7 @@ if [ $1 = "-c" ]; then
 	exit 0
 fi
 
-if [ $1 = "-remote" ]; then
+if [ "$1" = "-remote" ]; then
 	add_remote_git
 	while [ $? -ne 0 ]; do
 		add_remote_git

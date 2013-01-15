@@ -53,11 +53,13 @@ if  [ -z "$1" ]; then
 fi
 
 if [ "$1" = "init" ]; then
+	cd ..
 	git_init_project "tools" "android" "miui" "build" 
 	exit 0
 fi
 
 if [ "$1" = "sync" ]; then 
+	cd ..
 	git_pull_project "tools" "android" "miui" "build"
 	exit 0
 fi

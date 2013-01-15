@@ -1,13 +1,18 @@
 #!/bin/bash
 
+PORT_ROOT=$3
+RELEASE_DIR=${PORT_ROOT}/release_zip
+YUN_DIR=${RELEASE_DIR}/Yunio
+OTADIR=releases_ota
 BUILD_NUMBER=$1
 PORT_PRODUCT=$2
-OTADIR=releases_ota
 OTATOOL=$PORT_ROOT/tools/releasetools/ota_from_target_files
 KEY=$PORT_ROOT/build/security/testkey
-RELDIR=releases_zip/Yunio
 NEWFILE="target_files_""`date +%Y%m%d%H%M%S`"".zip"
-OTAFILE="ota_miui_""${PORT_PRODUCT}""_""${BUILD_NUMBER}""_""`date +%Y%m%d`"".zip"
+index=`expr index "${PORT_PRODUCT}" "_"`
+PRODUCT=${PORT_PRODUCT:0:$index-1}
+BUILDER=${PORT_PRODUCT:$index:2}
+OTAFILE="ota_miui_""${PRODUCT}""_""${BUILD_NUMBER}""_""${BUILDER}""`date +%Y%m%d`"".zip"
 
 
 if [ ! -d "$OTADIR" ]; then
@@ -26,7 +31,7 @@ for file in `ls $OTADIR`; do
 done
 echo "OTAFILE will be generated from $NEWFILE to ${file1}..."
 if [ -f "$OTADIR/${file1}" ]; then
-	$OTATOOL -k $KEY -i $OTADIR/${file1} $OTADIR/$NEWFILE $RELDIR/$OTAFILE
+	$OTATOOL -k $KEY -i $OTADIR/${file1} $OTADIR/$NEWFILE $YUN_DIR/$OTAFILE
 else
 	echo "Last target_files wasn't found!!!!!"
 	echo "Latest target_files was copied to ota folder"
