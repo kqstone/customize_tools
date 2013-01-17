@@ -6,7 +6,7 @@ RELEASE_OTA       = $(PORT_ROOT)/customize_tools/release_ota.sh
 FORMAT_FRAMEWORK  = $(PORT_ROOT)/customize_tools/formatframework.sh
 
 
-fullota: BUILD_NUMBER := 3.1.11
+fullota: BUILD_NUMBER := 3.1.18
 
 releasezip: flashzip otazip
 	
