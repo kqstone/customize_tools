@@ -6,6 +6,7 @@
 
 FW1=framework.jar.out
 FW2=framework2.jar.out
+FW3=secondary-framework.jar.out
 
 mvdir() {
 	if [ ! -d "$2" ]; then
@@ -20,18 +21,24 @@ mvdir() {
 }
 
 if [ $1 = "patch" ]; then
+	if [ -d ${FW3} ]; then
+		mv ${FW3} ${FW2}
+	fi
 	mvdir "$FW2/smali" "$FW1/smali"
 fi
 
 if [ $1 = "make" ]; then
+	if [ -d ${FW3} ]; then
+		mv ${FW3} ${FW2}
+	fi
 	mvdir "$FW1/smali/android/filterfw" "$FW2/smali/android/filterfw"
 	mvdir "$FW1/smali/android/filterpacks" "$FW2/smali/android/filterpacks"
 	mvdir "$FW1/smali/android/gesture" "$FW2/smali/android/gesture"
 	mvdir "$FW1/smali/android/media/effect" "$FW2/smali/android/media/effect"
 	mvdir "$FW1/smali/android/media/videoeditor" "$FW2/smali/android/media/videoeditor"
-	mvdir "$FW1/smali/android/speech/srec" "$FW1/smali/android/speech/srec"
-	mvdir "$FW1/smali/android/test" "$FW1/smali/android/test"
-	mvdir "$FW1/smali/com/android/server/sip" "$FW1/smali/com/android/server/sip"
+	mvdir "$FW1/smali/android/speech/srec" "$FW2/smali/android/speech/srec"
+	mvdir "$FW1/smali/android/test" "$FW2/smali/android/test"
+	mvdir "$FW1/smali/com/android/server/sip" "$FW2/smali/com/android/server/sip"
 fi
 
 

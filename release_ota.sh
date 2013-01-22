@@ -6,8 +6,8 @@ YUN_DIR=${RELEASE_DIR}/Yunio
 OTADIR=releases_ota
 BUILD_NUMBER=$1
 PORT_PRODUCT=$2
-OTATOOL=$PORT_ROOT/tools/releasetools/ota_from_target_files
-KEY=$PORT_ROOT/build/security/testkey
+OTATOOL=${PORT_ROOT}/tools/releasetools/ota_from_target_files
+KEY=${PORT_ROOT}/build/security/testkey
 NEWFILE="target_files_""`date +%Y%m%d%H%M%S`"".zip"
 index=`expr index "${PORT_PRODUCT}" "_"`
 PRODUCT=${PORT_PRODUCT:0:$index-1}
@@ -32,6 +32,14 @@ done
 echo "OTAFILE will be generated from $NEWFILE to ${file1}..."
 if [ -f "$OTADIR/${file1}" ]; then
 	$OTATOOL -k $KEY -i $OTADIR/${file1} $OTADIR/$NEWFILE $YUN_DIR/$OTAFILE
+	if [ ! $? -eq 0 ]; then
+		echo "Generate otazip failed!"
+		echo "Removing temp files..."
+		rm -f $OTADIR/$NEWFILE
+		echo "$NEWFILE cleaned"
+	else
+		echo "$OTAFILE generated in $YUN_DIR"
+	fi
 else
 	echo "Last target_files wasn't found!!!!!"
 	echo "Latest target_files was copied to ota folder"
